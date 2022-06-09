@@ -1,0 +1,182 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Team {
+  """
+  id of the team
+  """
+  id: String!
+
+  """
+  name of the team
+  """
+  teamName: String!
+
+  """
+  teamLeadName of the team
+  """
+  teamLeadName: String!
+
+  """
+  companyid of the team
+  """
+  companyId: String!
+  company: Company!
+}
+
+type Company {
+  """
+  id of the company
+  """
+  id: String!
+
+  """
+  name of the company
+  """
+  companyName: String!
+
+  """
+  companyCEO of the company
+  """
+  companyCEO: String!
+
+  """
+  address of the company
+  """
+  companyAddress: String!
+
+  """
+  Inception Date  of the company
+  """
+  inceptionDate: DateTime
+  teams: [Team!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type User {
+  """
+  id of the user
+  """
+  id: String
+
+  """
+   name of the user
+  """
+  name: String!
+
+  """
+  email of the user
+  """
+  email: String!
+
+  """
+  [password] of the user
+  """
+  password: String
+
+  """
+  last login of the user
+  """
+  lastLoginAt: DateTime
+}
+
+type UserToken {
+  """
+   emailof the user
+  """
+  token: String!
+}
+
+type Query {
+  Companys(filters: companyFilters!): [Company!]!
+  Company(id: String!): Company!
+  teams(filters: teamFilters!): [Team!]!
+  team(id: String!): Team
+}
+
+input companyFilters {
+  companyName: String
+}
+
+input teamFilters {
+  companyId: String
+}
+
+type Mutation {
+  createCompany(createCompanyInput: CreateCompanyInput!): Company!
+  createTeam(data: teamInput!): Team!
+  registerUser(registerInput: RegisterDto!): User!
+  login(loginInput: LoginDto!): UserToken!
+  refresh(userInput: RegisterDto!): UserToken!
+}
+
+input CreateCompanyInput {
+  """
+  company name
+  """
+  companyName: String!
+
+  """
+  companyCEO of the company
+  """
+  companyCEO: String!
+
+  """
+  address of the company
+  """
+  companyAddress: String!
+
+  """
+  Inception Date of the  Company
+  """
+  inceptionDate: DateTime
+}
+
+input teamInput {
+  teamName: String!
+  teamLeadName: String!
+  company: teamCompanyInput
+}
+
+input teamCompanyInput {
+  connect: teamCompanyConnectInput
+  create: CreateCompanyInput
+}
+
+input teamCompanyConnectInput {
+  id: String!
+}
+
+input RegisterDto {
+  """
+   email of the user
+  """
+  email: String!
+
+  """
+   password of the user
+  """
+  password: String!
+
+  """
+   name of the user
+  """
+  name: String!
+}
+
+input LoginDto {
+  """
+   emailof the user
+  """
+  email: String!
+
+  """
+   password of the user
+  """
+  password: String!
+}
